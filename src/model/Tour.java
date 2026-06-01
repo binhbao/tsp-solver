@@ -5,10 +5,7 @@ import java.util.List;
 
 public class Tour {
 
-    // lưu index của city trong TSPProblem
     private List<Integer> path;
-
-    // tổng chi phí tour
     private double cost;
 
     public Tour() {
@@ -21,9 +18,6 @@ public class Tour {
         this.cost = cost;
     }
 
-    // ======================
-    // GETTERS / SETTERS
-    // ======================
     public List<Integer> getPath() {
         return path;
     }
@@ -40,37 +34,37 @@ public class Tour {
         this.cost = cost;
     }
 
-    // ======================
-    // UTILITY METHODS
-    // ======================
-
-    public void addCity(int cityIndex) {
-        path.add(cityIndex);
+    /**
+     * Fitness dùng cho Genetic Algorithm
+     */
+    public double getFitness() {
+        if (cost == 0) {
+            return Double.MAX_VALUE;
+        }
+        return 1.0 / cost;
     }
 
-    public void clear() {
-        path.clear();
-        cost = Double.MAX_VALUE;
+    /**
+     * Tạo bản sao của Tour
+     */
+    public Tour copy() {
+        return new Tour(path, cost);
     }
 
+    /**
+     * Thêm thành phố vào tour
+     */
+    public void addCity(int city) {
+        path.add(city);
+    }
+
+    /**
+     * Số thành phố trong tour
+     */
     public int size() {
         return path.size();
     }
 
-    public Tour copy() {
-        return new Tour(new ArrayList<>(path), cost);
-    }
-
-    // ======================
-    // VALIDATION
-    // ======================
-    public boolean isComplete(int n) {
-        return path.size() == n;
-    }
-
-    // ======================
-    // PRINT FORMAT
-    // ======================
     @Override
     public String toString() {
 
@@ -79,6 +73,7 @@ public class Tour {
         sb.append("Tour: ");
 
         for (int i = 0; i < path.size(); i++) {
+
             sb.append(path.get(i));
 
             if (i < path.size() - 1) {
@@ -91,7 +86,7 @@ public class Tour {
         }
 
         sb.append("\nCost: ")
-          .append(String.format("%.4f", cost));
+          .append(String.format("%.2f", cost));
 
         return sb.toString();
     }

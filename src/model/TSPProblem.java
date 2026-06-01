@@ -53,7 +53,7 @@ public class TSPProblem {
     public int size() {
         return cities.size();
     }
-
+    
     public List<City> getCities() {
         return cities;
     }
